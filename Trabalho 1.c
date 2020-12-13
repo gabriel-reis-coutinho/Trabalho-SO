@@ -8,7 +8,7 @@ Gabriel dos Reis Coutinho 9807124
 Algoritimo apresentado em sala de aula
 
 typedef int semaphore;
-semaphore mutex = 1
+semaphore mutex = 1;
 semaphore dp = 1;
 int rc = 0;
 
@@ -37,6 +37,8 @@ void writer(void){
 }
 */
 
+
+/* Bibliotecas para implementação de POSIX threads, operações de semáforos e E/S */
 #include <pthread.h>
 #include <semaphore.h>
 #include <stdio.h>
@@ -44,9 +46,13 @@ void writer(void){
 
 sem_t wrt; //semaforo binário para exclusao mutua e sinalização
 pthread_mutex_t mutex; //exclusão mutua enquanto o qtdReader está sendo modificado
+
+
+/* Inicialização de variáveis */
 int data = 1;
 int qtdReader = 0; //quantidade de readers
 
+/* Procesimento para o escritor */
 void *writer(void *nroWriter){
 	sem_wait(&wrt);
 	data++;
@@ -59,6 +65,7 @@ void *writer(void *nroWriter){
 	sem_post(&wrt);
 }
 
+/* Procesimento para o leitor */
 void *reader(void *nroReader){
 	pthread_mutex_lock(&mutex);//Lock antes de modificar o qtdReader
 	qtdReader++;
@@ -85,11 +92,11 @@ void *reader(void *nroReader){
 
 int main(){
 
-	pthread_t read[10],write[10];//conforme a especificação, 10 leitores.
+	pthread_t read[10],write[10];	// 10 leitores, um escritor
 	pthread_mutex_init(&mutex, NULL);
 	sem_init(&wrt, 0, 1);
 
-	int a[10] = {1,2,3,4,5,6,7,8,9,10};//nomeando os consumidores e produtores
+	int a[10] = {1,2,3,4,5,6,7,8,9,10};	//nomeando os consumidores e produtores
 
 	for (int i = 0; i < 10; ++i)
 	{
