@@ -72,7 +72,7 @@ void *reader(void *nroReader){
 	qtdReader++;
 	if (qtdReader == 1)
 	{
-		sem_wait(&wrt);	// Se for o primeiro reader, vai bloquear o writer
+		sem_wait(&wrt);		// Primeiro leitor bloqueia escritor
 	}
 	pthread_mutex_unlock(&mutex);
 
@@ -86,9 +86,9 @@ void *reader(void *nroReader){
 	qtdReader--;
 	if (qtdReader == 0)
 	{
-		sem_post(&wrt);//se for o ultimo reader, vai acordar o writer
-	}
-	pthread_mutex_unlock(&mutex);
+		sem_post(&wrt);		// último leitor desbloqueia escritor 
+	}	
+		pthread_mutex_unlock(&mutex);
 }
 
 int main(){
