@@ -150,7 +150,7 @@ void *reader(void *nroReader){
      sem_wait(&wrt);
     }
 
-    //decimo primeiro reader, deve ser bloquado
+    //caso exista um decimo primeiro reader, ele deve ser bloqueado e esperar outro reader terminar
     while(countReader == 11){
         pthread_cond_wait(&cond, &mutex);
     }
@@ -246,9 +246,10 @@ void *reader(void *nroReader){
 
     pthread_mutex_unlock(&mutex);
 
+    //se existirem 11 readers, dar o sinal para que o decimo primeiro possa continuar
     if(countReader == 11){
         countReader--;
-        pthread_cond_signal(&cond);
+        pthread_cond_signal(&cond);//sinal para o reader continuar
     }else{
         countReader--;
     }
