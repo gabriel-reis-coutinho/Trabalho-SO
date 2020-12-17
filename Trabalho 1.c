@@ -7,7 +7,8 @@ Prof. Sarita
 
 Grupo
 Gabriel dos Reis Coutinho 9807124 	          
-Mônica Colacique 7143527		   
+Mônica Colacique 7143527
+Jonas Wendel 10295461		   
 
 
 *************************************************************/
